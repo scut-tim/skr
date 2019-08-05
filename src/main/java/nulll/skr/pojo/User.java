@@ -3,6 +3,8 @@ package nulll.skr.pojo;
 import javax.persistence.*;
 import java.util.Date;
 
+
+
 @Entity
 @Table(name="user")
 public class User implements Comparable<User>{
@@ -18,11 +20,22 @@ public class User implements Comparable<User>{
     @Column(name="email")
     private String email;
 
+    @Column(name ="gender")
     private Integer gender;
-    private Image headPortrait;
+
+//    @Column(name = "headPortrait")
+//    private Image headPortrait;
+
+    @Column(name = "personalProfile")
     private String personalProfile;
+
+    @Column(name = "attentionNum")
     private Integer attentionNum;
+
+    @Column(name = "fansNum")
     private Integer fansNum;
+
+    @Column(name = "birthday")
     private Date birthday;
 
     public Integer getAttentionNum() {
@@ -59,12 +72,12 @@ public class User implements Comparable<User>{
         this.personalProfile = personalProfile;
     }
 
-    public Image getHeadPortrait() {
-        return headPortrait;
-    }
-    public void setHeadPortrait(Image headPortrait) {
-        this.headPortrait = headPortrait;
-    }
+//    public Image getHeadPortrait() {
+//        return headPortrait;
+//    }
+//    public void setHeadPortrait(Image headPortrait) {
+//        this.headPortrait = headPortrait;
+//    }
 
     public Integer getGender() {
         return gender;
@@ -104,5 +117,16 @@ public class User implements Comparable<User>{
     @Override
     public int compareTo(User o){
         return -1;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
