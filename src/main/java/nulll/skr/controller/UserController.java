@@ -24,6 +24,8 @@ public class UserController {
             userRepository.save(user);
             return true;
         }
+
+        System.out.println("重复拉，用户名，别乱插入了");
         return false;
 
 
@@ -31,8 +33,8 @@ public class UserController {
 
 
     @ResponseBody
-    @GetMapping("/user")
-    public boolean userLogin(User user){
+    @PostMapping(value = "/userLogin",produces = "application/json")
+    public Boolean userLogin(User user){
 
 
         System.out.println(user);
@@ -53,6 +55,8 @@ public class UserController {
             }
 
         }
+
+
 
         return false;
 

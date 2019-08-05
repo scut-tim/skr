@@ -8,8 +8,12 @@ import javax.persistence.Table;
 //@Table(name = "post")
 public class Post {
 
+
+
     private String title;
     private String content;
+
+    private Comment comment;
 
 
 
