@@ -26,8 +26,8 @@ public class User implements Comparable<User>{
     @Column(name ="gender")
     private Integer gender;
 
-//    @Column(name = "headPortrait")
-//    private Image headPortrait;
+    @Column(name = "headPortrait")
+    private byte[] headPortrait;
 
     @Column(name = "personalProfile")
     private String personalProfile;
@@ -82,12 +82,29 @@ public class User implements Comparable<User>{
         this.personalProfile = personalProfile;
     }
 
-//    public Image getHeadPortrait() {
-//        return headPortrait;
-//    }
-//    public void setHeadPortrait(Image headPortrait) {
-//        this.headPortrait = headPortrait;
-//    }
+    public byte[] getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(byte[] headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
+    public Set<Post> getPostSet() {
+        return postSet;
+    }
+
+    public void setPostSet(Set<Post> postSet) {
+        this.postSet = postSet;
+    }
 
     public Integer getGender() {
         return gender;
