@@ -22,8 +22,10 @@ public class Snack {
     @Column(name = "image")
     private byte[] image;
 
+
     @OneToMany(mappedBy = "snack",cascade = CascadeType.ALL)
     private Set<Post> postSet;
+
 
     public Integer getId() {
         return id;
@@ -57,6 +59,7 @@ public class Snack {
         this.image = image;
     }
 
+
     public Set<Post> getPostSet() {
         return postSet;
     }
@@ -64,4 +67,5 @@ public class Snack {
     public void setPostSet(Set<Post> postSet) {
         this.postSet = postSet;
     }
+
 }

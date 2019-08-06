@@ -5,8 +5,6 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
 
 @Entity
@@ -31,7 +29,6 @@ public class User implements Comparable<User>{
     private Integer gender;
 
     @Column(name = "headPortrait")
-
     private byte[] headPortrait;
 
 
