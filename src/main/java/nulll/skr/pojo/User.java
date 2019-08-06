@@ -1,8 +1,10 @@
 package nulll.skr.pojo;
 
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
 import java.util.Date;
-
+import java.util.Set;
 
 
 @Entity
@@ -13,18 +15,22 @@ public class User implements Comparable<User>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @Column(name="userName")
     private String userName;
+
     @Column(name="password")
     private String password;
+
     @Column(name="email")
     private String email;
 
     @Column(name ="gender")
     private Integer gender;
 
-//    @Column(name = "headPortrait")
-//    private Image headPortrait;
+    @Column(name = "headPortrait")
+    private byte[] headPortrait;
+
 
     @Column(name = "personalProfile")
     private String personalProfile;
@@ -37,6 +43,13 @@ public class User implements Comparable<User>{
 
     @Column(name = "birthday")
     private Date birthday;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<Comment> commentSet;
+
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
+    private Set<Post> postSet;
+
 
     public Integer getAttentionNum() {
         return attentionNum;
@@ -72,12 +85,30 @@ public class User implements Comparable<User>{
         this.personalProfile = personalProfile;
     }
 
-//    public Image getHeadPortrait() {
-//        return headPortrait;
-//    }
-//    public void setHeadPortrait(Image headPortrait) {
-//        this.headPortrait = headPortrait;
-//    }
+
+    public byte[] getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(byte[] headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
+    public Set<Post> getPostSet() {
+        return postSet;
+    }
+
+    public void setPostSet(Set<Post> postSet) {
+        this.postSet = postSet;
+    }
 
     public Integer getGender() {
         return gender;
@@ -118,7 +149,6 @@ public class User implements Comparable<User>{
     public int compareTo(User o){
         return -1;
     }
-
 
     @Override
     public String toString() {
