@@ -4,6 +4,9 @@ package nulll.skr.pojo;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.net.URL;
 
 @Entity
 @Table(name = "post")
@@ -21,6 +24,11 @@ public class Post {
 
     @Column(name="content")
     private String content;
+
+
+    @Column(name = "image")
+    private byte[] image;
+
 
     @Column(name="date")
     private Date date;
@@ -55,6 +63,14 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getDate() {
