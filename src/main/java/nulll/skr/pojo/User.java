@@ -1,8 +1,12 @@
 package nulll.skr.pojo;
 
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 
 @Entity
@@ -26,8 +30,8 @@ public class User implements Comparable<User>{
     @Column(name ="gender")
     private Integer gender;
 
-//    @Column(name = "headPortrait")
-//    private Image headPortrait;
+    @Column(name = "headPortrait")
+    private BufferedImage headPortrait;
 
     @Column(name = "personalProfile")
     private String personalProfile;
@@ -82,12 +86,16 @@ public class User implements Comparable<User>{
         this.personalProfile = personalProfile;
     }
 
-//    public Image getHeadPortrait() {
-//        return headPortrait;
-//    }
-//    public void setHeadPortrait(Image headPortrait) {
-//        this.headPortrait = headPortrait;
-//    }
+    public BufferedImage getHeadPortrait() {
+        return headPortrait;
+    }
+    public void setHeadPortrait(String s) { ;
+        try {
+            this.headPortrait = ImageIO.read(new java.net.URL(s));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public Integer getGender() {
         return gender;
@@ -128,7 +136,6 @@ public class User implements Comparable<User>{
     public int compareTo(User o){
         return -1;
     }
-
 
     @Override
     public String toString() {
