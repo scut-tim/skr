@@ -1,9 +1,6 @@
 package nulll.skr.pojo;
 
-import javax.imageio.ImageIO;
 import javax.persistence.*;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.Set;
 
 @Entity
@@ -22,10 +19,10 @@ public class Snack {
     private Integer price;
 
     @Column(name = "image")
-    private BufferedImage image;
+    private byte[] image;
 
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private Set<Post> post;
+//    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+//    private Set<Post> postSet;
 
     public Integer getId() {
         return id;
@@ -51,12 +48,19 @@ public class Snack {
         this.price = price;
     }
 
-    public BufferedImage getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(BufferedImage image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
+//    public Set<Post> getPostSet() {
+//        return postSet;
+//    }
+//
+//    public void setPostSet(Set<Post> postSet) {
+//        this.postSet = postSet;
+//    }
 }
