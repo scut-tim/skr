@@ -2,7 +2,7 @@ package nulll.skr.pojo;
 
 import javax.persistence.*;
 import java.util.Date;
-
+import java.util.Set;
 
 
 @Entity
@@ -13,10 +13,13 @@ public class User implements Comparable<User>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @Column(name="userName")
     private String userName;
+
     @Column(name="password")
     private String password;
+
     @Column(name="email")
     private String email;
 
@@ -37,6 +40,13 @@ public class User implements Comparable<User>{
 
     @Column(name = "birthday")
     private Date birthday;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<Comment> commentSet;
+
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
+    private Set<Post> postSet;
+
 
     public Integer getAttentionNum() {
         return attentionNum;
