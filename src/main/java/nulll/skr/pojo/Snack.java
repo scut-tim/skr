@@ -67,5 +67,8 @@ public class Snack {
     public void setPostSet(Set<Post> postSet) {
         this.postSet = postSet;
     }
+    public void addPost(Post post){
+        this.postSet.add(post);
+    }
 
 }

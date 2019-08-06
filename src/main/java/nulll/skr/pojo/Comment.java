@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-
-
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -32,7 +30,6 @@ public class Comment {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -40,7 +37,6 @@ public class Comment {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -48,7 +44,6 @@ public class Comment {
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
@@ -56,7 +51,6 @@ public class Comment {
     public Date getDate() {
         return date;
     }
-
     public void setDate(Date date) {
         this.date = date;
     }

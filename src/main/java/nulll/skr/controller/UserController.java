@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 
 @RestController
@@ -48,6 +49,25 @@ public class UserController {
                 return true;
             }
 
+        }
+        return false;
+    }
+
+    public boolean viewInformation(User user){
+        User user1 = userRepository.findByUserName(user.getUserName());
+        if(user1 != null){
+            // 至于这些属性显示应该就看前端了吧....
+            Integer id = user1.getId();
+            String userName = user1.getUserName();
+            String email = user1.getEmail();
+            Integer gender = user1.getGender();
+            byte[] headPortrait = user1.getHeadPortrait();
+            String personalProfile = user1.getPersonalProfile();
+            Integer attentionNum = user1.getAttentionNum();
+            Integer fansNum = user1.getFansNum();
+            Date birthday =user1.getBirthday();
+
+            return true;
         }
         return false;
     }

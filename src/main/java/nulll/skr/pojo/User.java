@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 
@@ -54,21 +55,33 @@ public class User implements Comparable<User>{
     public Integer getAttentionNum() {
         return attentionNum;
     }
-    public void setAttentionNum(Integer attentionNum) {
+    private void setAttentionNum(Integer attentionNum) {
         if(attentionNum<0){
             this.attentionNum=0;
         }
         this.attentionNum = attentionNum;
     }
+    public void addAttentionNum(){
+        setAttentionNum(this.attentionNum+1);
+    }
+    public void subAttentionNum(){
+        setAttentionNum(this.attentionNum-1);
+    }
 
     public Integer getFansNum() {
         return fansNum;
     }
-    public void setFansNum(Integer fansNum) {
+    private void setFansNum(Integer fansNum) {
         if(fansNum<0){
             this.fansNum=0;
         }
         this.fansNum = fansNum;
+    }
+    public void addFansNum(){
+        setFansNum(this.fansNum+1);
+    }
+    public void subFansNum(){
+        setFansNum(this.fansNum-1);
     }
 
     public Date getBirthday() {
@@ -108,6 +121,16 @@ public class User implements Comparable<User>{
 
     public void setPostSet(Set<Post> postSet) {
         this.postSet = postSet;
+    }
+    public void addPost(Post post){
+        this.postSet.add(post);
+    }
+    public void deletePost(Post post){
+        for(Iterator it = postSet.iterator(); it.hasNext();){
+            Post temp = (Post) it.next();
+            if(post.getId()==temp.getId())
+                it.remove();
+        }
     }
 
     public Integer getGender() {
@@ -159,4 +182,5 @@ public class User implements Comparable<User>{
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }
