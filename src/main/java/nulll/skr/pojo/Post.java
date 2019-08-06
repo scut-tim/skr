@@ -4,9 +4,7 @@ package nulll.skr.pojo;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.net.URL;
+
 
 @Entity
 @Table(name = "post")
