@@ -4,9 +4,7 @@ package nulll.skr.pojo;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.net.URL;
+
 
 @Entity
 @Table(name = "post")
@@ -34,12 +32,15 @@ public class Post {
     private Date date;
 
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="post_user",referencedColumnName = "id")
+    @JoinColumn(name="post_author",referencedColumnName = "id")
     private User author;
 
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 
+    @ManyToOne(targetEntity = Snack.class)
+    @JoinColumn(name="post_snack",referencedColumnName = "id")
+    private Snack snack;
 
     public Integer getId() {
         return id;
