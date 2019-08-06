@@ -29,7 +29,6 @@ public class User implements Comparable<User>{
     private Integer gender;
 
     @Column(name = "headPortrait")
-
     private byte[] headPortrait;
 
 
