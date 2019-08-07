@@ -3,12 +3,15 @@ package nulll.skr.controller;
 import nulll.skr.pojo.User;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.Date;
 
 
@@ -36,7 +39,8 @@ public class UserController {
 
 
     @PostMapping(value = "/userLogin",produces = "application/json")
-    public Boolean userLogin(User user){
+    public Boolean userLogin(User user, HttpServletRequest httpServletRequest
+            , HttpServletResponse httpServletResponse){
 
         System.out.println(user);
         User user1 = userRepository.findByUserName(user.getUserName());
@@ -45,8 +49,17 @@ public class UserController {
         if(user1 != null){
 
             if(user1.getPassword().equals(user.getPassword())){
+
                 System.out.println(user1.getPassword());
+
+                Cookie cookie = new Cookie("user",user1.getUserName());
+
+                httpServletRequest.getSession().setAttribute("userPassword",user.getPassword());
+
+                httpServletResponse.addCookie(cookie);
+
                 return true;
+
             }
 
         }
