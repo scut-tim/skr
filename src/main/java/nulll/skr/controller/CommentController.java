@@ -5,7 +5,6 @@ import nulll.skr.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-import java.util.Date;
 
 @RestController
 public class CommentController {
