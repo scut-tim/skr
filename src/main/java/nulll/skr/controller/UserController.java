@@ -21,7 +21,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-
     @PostMapping("/user")
     public boolean userRegister(User user){
 
@@ -35,8 +34,6 @@ public class UserController {
 
 
     }
-
-
 
     @PostMapping(value = "/userLogin",produces = "application/json")
     public Boolean userLogin(User user, HttpServletRequest httpServletRequest
@@ -112,9 +109,11 @@ public class UserController {
         ///////
     }
 
-
-
-
+    @PutMapping("/user")
+    public boolean updateUser(User user){
+        userRepository.saveAndFlush(user);
+        return true;
+    }
 
 
 }
