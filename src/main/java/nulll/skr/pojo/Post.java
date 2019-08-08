@@ -10,8 +10,6 @@ import java.util.Set;
 @Table(name = "post")
 public class Post {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,10 +21,11 @@ public class Post {
     @Column(name="content")
     private String content;
 
-
     @Column(name = "image")
     private byte[] image;
 
+    @Column(name = "likeNum")
+    private Integer likeNum;
 
     @Column(name="date")
     private Date date;
@@ -72,6 +71,14 @@ public class Post {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
     public Date getDate() {

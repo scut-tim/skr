@@ -19,9 +19,11 @@ public class Snack {
     @Column(name = "price")
     private Integer price;
 
+    @Column(name = "likeNum")
+    private Integer likeNum;
+
     @Column(name = "image")
     private byte[] image;
-
 
     @OneToMany(mappedBy = "snack",cascade = CascadeType.ALL)
     private Set<Post> postSet;
@@ -49,6 +51,14 @@ public class Snack {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
     public byte[] getImage() {
