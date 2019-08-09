@@ -95,10 +95,6 @@ public class Post {
         return likeNum;
     }
 
-    public void setLikeNum(Integer likeNum) {
-        this.likeNum = likeNum;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -121,5 +117,21 @@ public class Post {
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
+    }
+
+    public void addComment(Comment comment){
+        commentSet.add(comment);
+    }
+
+    public void deleteComment(Comment comment) {
+         commentSet.remove(comment);
+    }
+
+    public void addLike(){
+        this.likeNum++;
+    }
+
+    public void cancelLike(){
+        this.likeNum--;
     }
 }

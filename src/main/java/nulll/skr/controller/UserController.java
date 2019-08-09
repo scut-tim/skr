@@ -1,5 +1,7 @@
 package nulll.skr.controller;
 
+import nulll.skr.pojo.Comment;
+import nulll.skr.pojo.Post;
 import nulll.skr.pojo.User;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +48,10 @@ public class UserController {
         if(user1 != null){
 
             if(user1.getPassword().equals(user.getPassword())){
-
                 System.out.println(user1.getPassword());
-
                 Cookie cookie = new Cookie("user",user1.getUserName());
-
                 httpServletRequest.getSession().setAttribute("userPassword",user.getPassword());
-
                 httpServletResponse.addCookie(cookie);
-
                 return true;
 
             }
@@ -64,7 +61,7 @@ public class UserController {
     }
 
     public boolean viewInformation(User user){
-        User user1 = userRepository.findByUserName(user.getUserName());
+        User user1 = userRepository.getOne(user.getId());
         if(user1 != null){
             // 至于这些属性显示应该就看前端了吧....
             Integer id = user1.getId();
@@ -75,7 +72,7 @@ public class UserController {
             String personalProfile = user1.getPersonalProfile();
             Integer attentionNum = user1.getAttentionNum();
             Integer fansNum = user1.getFansNum();
-            Date birthday =user1.getBirthday();
+            Date birthday = user1.getBirthday();
 
             return true;
         }
@@ -102,9 +99,56 @@ public class UserController {
 
     @PutMapping("/user")
     public boolean updateUser(User user){
-        userRepository.saveAndFlush(user);
-        return true;
+        if(userRepository.getOne(user.getId())!=null){
+            userRepository.saveAndFlush(user);
+            return true;
+        }
+        return false;
     }
 
+
+    public boolean makeComment(Comment com, Post postRel){
+        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+        if(temp != null) {
+            temp.addComment(com);
+            //对帖子和评论两个仓库进行修改
+            CommentController.getCommentRepository().save(com);
+            PostController.getPostRepository().saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteComment(Comment com, Post postRel){
+        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+        if(temp != null) {
+            temp.deleteComment(com);
+            //对帖子和评论两个仓库进行修改
+            CommentController.getCommentRepository().delete(com);
+            PostController.getPostRepository().saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean makeLike(Post postRel){
+        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+        if(temp != null) {
+            temp.addLike();
+            PostController.getPostRepository().saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cancelLike(Post postRel){
+        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+        if(temp != null) {
+            temp.cancelLike();
+            PostController.getPostRepository().saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
 
 }

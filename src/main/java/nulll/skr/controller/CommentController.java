@@ -3,14 +3,24 @@ package nulll.skr.controller;
 import nulll.skr.pojo.Comment;
 import nulll.skr.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CommentController {
 
     @Autowired
-    private CommentRepository commentRepository;
+    private static CommentRepository commentRepository;
+    public static CommentRepository getCommentRepository(){
+        return  commentRepository;
+    }
 
     @PostMapping("/comment")
     public boolean addComment(Comment comment){

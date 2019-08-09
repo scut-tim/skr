@@ -15,7 +15,10 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private PostRepository postRepository;
+    private static PostRepository postRepository;
+    public static PostRepository getPostRepository(){
+        return  postRepository;
+    }
 
     @PostMapping("/post")
     public boolean posting(Post post){
