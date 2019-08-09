@@ -2,13 +2,31 @@ package nulll.skr.pojo;
 
 
 import javax.persistence.*;
+import javax.xml.crypto.Data;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "post")
 public class Post {
+    public Post(){}//到时要删
+    public Post(String title, String content, byte[] image, Integer likeNum,
+                Date date, User author, Set<Comment> commentSet, Snack snack) {
+        this.title = title;
+        this.content = content;
+        this.image = image;
+        this.likeNum = 0;
+        this.date = new Date();//创建时间即为当前日期
+        this.author = author;
+        if(commentSet == null) {
+            this.commentSet = new HashSet<Comment>();
+        }
+        else
+            this.commentSet = commentSet;
+        this.snack = snack;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

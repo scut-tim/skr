@@ -2,11 +2,23 @@ package nulll.skr.pojo;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "snack")
 public class Snack {
+    public Snack(String name, Integer price, Integer likeNum, byte[] image, Set<Post> postSet) {
+        this.name = name;
+        this.price = price;
+        this.likeNum = likeNum;
+        this.image = image;
+        if(postSet == null) {
+            this.postSet = new HashSet<Post>();
+        }
+        else
+            this.postSet = postSet;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,6 +7,12 @@ import java.util.Date;
 @Entity
 @Table(name = "comment")
 public class Comment {
+    public Comment(User user, String content, Date date, Post post) {
+        this.user = user;
+        this.content = content;
+        this.date = new Date();
+        this.post = post;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

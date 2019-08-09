@@ -3,7 +3,9 @@ package nulll.skr.pojo;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -11,6 +13,41 @@ import java.util.Set;
 @Entity
 @Table(name="user")
 public class User implements Comparable<User>{
+    public User(){}//到时要删
+    public User(String userName, String password, String email, Integer gender,
+                byte[] headPortrait, String personalProfile, Integer attentionNum,
+                Integer fansNum, Date birthday, Set<Comment> commentSet,
+                Set<Post> postSet) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        if (gender == null) {
+            this.gender = 1;// 默认1为男性
+        }
+        if(headPortrait == null) {
+            this.headPortrait = new byte[1];//可以改为默认图片，先设为空
+        }
+        if(personalProfile == null) {
+            this.personalProfile = "";
+        }
+        this.attentionNum = 0;
+        this.fansNum = 0;
+        if(birthday == null){
+            this.birthday = new Date(String.valueOf(new SimpleDateFormat("2020-1-1")));
+        }
+
+        if(commentSet == null){
+            this.commentSet = new HashSet<Comment>();
+        }
+        else
+            this.commentSet = commentSet;
+
+        if(postSet == null) {
+            this.postSet = new HashSet<Post>();
+        }
+        else
+            this.postSet = postSet;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

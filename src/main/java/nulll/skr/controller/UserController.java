@@ -84,20 +84,12 @@ public class UserController {
 
     @PostMapping("/image")
     public Boolean upLoad(MultipartFile image){
-
-        //////
         try {
-                byte[] imageByte = image.getBytes();
-
-                User user = new User();
-
-                user.setId(1);
-
-                user.setHeadPortrait(imageByte);
-
-                userRepository.save(user);
-
-
+            byte[] imageByte = image.getBytes();
+            User user = new User();
+            user.setId(1);
+            user.setHeadPortrait(imageByte);
+            userRepository.save(user);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -106,7 +98,6 @@ public class UserController {
 
         return true;
 
-        ///////
     }
 
     @PutMapping("/user")

@@ -55,18 +55,11 @@ public class PostController {
 
     @GetMapping("/posts/{pageNum}")
     public List<Post> listPosts(@PathVariable(name="pageNum")int pageNum){
-
-
         Pageable pageable = new PageRequest(pageNum,10);
-
         Page<Post> postPage = postRepository.findAll(pageable);
-
         List<Post> postList = postPage.getContent();
-
         System.out.println(postList);
-
         return postList;
-
     }
 
     @PutMapping("/post")
