@@ -49,8 +49,6 @@ public class CommentController {
 
         post.setCommentSet(commentSet);
 
-        postRepository.saveAndFlush(post);
-
         return true;
     }
 
