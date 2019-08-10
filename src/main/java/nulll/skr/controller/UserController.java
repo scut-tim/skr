@@ -28,8 +28,8 @@ public class UserController {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
+//    @Autowired
+//    private CommentRepository commentRepository;
 
     @PostMapping("/user")
     public boolean userRegister(User user){
@@ -131,48 +131,53 @@ public class UserController {
     }
 
 
-    //评论
-    public boolean makeComment(Comment com, Post postRel){
-        Post temp = postRepository.getOne(postRel.getId());
-        if(temp != null) {
-            temp.addComment(com);
-            //对帖子和评论两个仓库进行修改
-            commentRepository.save(com);
-            postRepository.saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
-    public boolean deleteComment(Comment com, Post postRel){
-        Post temp = postRepository.getOne(postRel.getId());
-        if(temp != null) {
-            temp.deleteComment(com);
-            //对帖子和评论两个仓库进行修改
-            commentRepository.delete(com);
-            postRepository.saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
+//应该是由CommentController负责吧
 
-    //点赞
-    public boolean makeLike(Post postRel){
-        Post temp = postRepository.getOne(postRel.getId());
-        if(temp != null) {
-            temp.addLike();
-            postRepository.saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
-    public boolean cancelLike(Post postRel){
-        Post temp = postRepository.getOne(postRel.getId());
-        if(temp != null) {
-            temp.cancelLike();
-            postRepository.saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
+//    //评论
+//    public boolean makeComment(Comment com, Post postRel){
+//        Post temp = postRepository.getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.addComment(com);
+//            //对帖子和评论两个仓库进行修改
+//            commentRepository.save(com);
+//            postRepository.saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
+//    public boolean deleteComment(Comment com, Post postRel){
+//        Post temp = postRepository.getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.deleteComment(com);
+//            //对帖子和评论两个仓库进行修改
+//            commentRepository.delete(com);
+//            postRepository.saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
+
+
+// 应该是由PostController负责吧
+
+//    //点赞
+//    public boolean makeLike(Post postRel){
+//        Post temp = postRepository.getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.addLike();
+//            postRepository.saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
+//    public boolean cancelLike(Post postRel){
+//        Post temp = postRepository.getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.cancelLike();
+//            postRepository.saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
 
 }
