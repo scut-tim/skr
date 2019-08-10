@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "snack")
-public class Snack {
+public class Snack implements Comparable<Snack>{
     public Snack(){}
     public Snack(String name, Integer price, Integer likeNum, byte[] image, Set<Post> postSet) {
         this.name = name;
@@ -95,5 +95,14 @@ public class Snack {
     }
     public void reduceLikeNum(){
         likeNum--;
+    }
+
+
+    @Override
+    public int compareTo(Snack o) {
+        if(this.likeNum > o.likeNum || (this.likeNum == o.likeNum && this.name.compareTo(o.name) == -1)){
+            return 1;
+        }
+        return -1;
     }
 }
