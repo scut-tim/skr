@@ -26,6 +26,7 @@ public class Post {
         this.snack = snack;
     }
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

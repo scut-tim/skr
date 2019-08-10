@@ -16,18 +16,17 @@ public class PostController {
 
     @Autowired
     private static PostRepository postRepository;
-    public static PostRepository getPostRepository(){
+    static PostRepository getPostRepository(){
         return  postRepository;
     }
 
     @PostMapping("/post")
     public boolean posting(Post post){
-
-        ///////////////
-        postRepository.save(post);
-        return true;
-        ///////////////
-
+        if(postRepository.getOne(post.getId())==null) {
+            postRepository.save(post);
+            return true;
+        }
+        return false;
     }
 
     @PostMapping("/image")
@@ -36,13 +35,9 @@ public class PostController {
         //////
         try {
             byte[] imageByte = image.getBytes();
-
             Post post = new Post();
-
             post.setId(1);
-
             post.setImage(imageByte);
-
             postRepository.save(post);
 
         } catch (IOException e) {

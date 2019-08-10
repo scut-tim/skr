@@ -107,6 +107,7 @@ public class UserController {
     }
 
 
+    //评论
     public boolean makeComment(Comment com, Post postRel){
         Post temp = PostController.getPostRepository().getOne(postRel.getId());
         if(temp != null) {
@@ -118,7 +119,6 @@ public class UserController {
         }
         return false;
     }
-
     public boolean deleteComment(Comment com, Post postRel){
         Post temp = PostController.getPostRepository().getOne(postRel.getId());
         if(temp != null) {
@@ -131,6 +131,7 @@ public class UserController {
         return false;
     }
 
+    //点赞
     public boolean makeLike(Post postRel){
         Post temp = PostController.getPostRepository().getOne(postRel.getId());
         if(temp != null) {
@@ -140,7 +141,6 @@ public class UserController {
         }
         return false;
     }
-
     public boolean cancelLike(Post postRel){
         Post temp = PostController.getPostRepository().getOne(postRel.getId());
         if(temp != null) {
