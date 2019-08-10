@@ -1,6 +1,7 @@
 package nulll.skr.controller;
 
 import nulll.skr.pojo.Comment;
+import nulll.skr.pojo.User;
 import nulll.skr.pojo.Post;
 import nulll.skr.repository.CommentRepository;
 import nulll.skr.repository.PostRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class CommentController {
@@ -25,16 +27,30 @@ public class CommentController {
     @Autowired
     private UserRepository userRepository;
 
+
     @Autowired
     private PostRepository postRepository;
+
 
     @PostMapping("/comment")
     public boolean addComment(Comment comment,String userName,int postId){
 
+        Post post = postRepository.getOne(postId);
+
+        Set<Comment> commentSet = post.getCommentSet();
+
+        User user = userRepository.findByUserName(userName);
+
+        comment.setUser(user);
+
+
+        System.out.println(comment);
 
         comment.setUser(userRepository.findByUserName(userName));
         comment.setPost(postRepository.getOne(postId));
         commentRepository.save(comment);
+
+
 
         return true;
     }
