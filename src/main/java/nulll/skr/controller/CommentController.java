@@ -3,6 +3,8 @@ package nulll.skr.controller;
 import nulll.skr.pojo.Comment;
 import nulll.skr.pojo.Post;
 import nulll.skr.repository.CommentRepository;
+import nulll.skr.repository.PostRepository;
+import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -20,15 +22,19 @@ public class CommentController {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @PostMapping("/comment")
-    public boolean addComment(Comment comment,String userName,String postId){
+    public boolean addComment(Comment comment,String userName,int postId){
 
 
-
+        comment.setUser(userRepository.findByUserName(userName));
+        comment.setPost(postRepository.getOne(postId));
         commentRepository.save(comment);
-
-
 
         return true;
     }

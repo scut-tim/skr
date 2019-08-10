@@ -60,4 +60,12 @@ public class Comment {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }
