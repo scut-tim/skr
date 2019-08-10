@@ -3,6 +3,7 @@ package nulll.skr.controller;
 import nulll.skr.pojo.Comment;
 import nulll.skr.pojo.Post;
 import nulll.skr.pojo.User;
+import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +23,11 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
+
 
     @PostMapping("/user")
     public boolean userRegister(User user){
@@ -60,6 +66,9 @@ public class UserController {
         return false;
     }
 
+
+
+
     public boolean viewInformation(User user){
         User user1 = userRepository.getOne(user.getId());
         if(user1 != null){
@@ -79,12 +88,23 @@ public class UserController {
         return false;
     }
 
-    @PostMapping("/image")
-    public Boolean upLoad(MultipartFile image){
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable(name = "id")int id){
+
+        User user = userRepository.getOne(id);
+        if(user != null){
+            user.setPostSet(postRepository.findAllByAuthor(user));
+            return user;
+        }
+        return null;
+    }
+
+
+    @PostMapping("/headPortrait/{id}")
+    public Boolean upLoad(MultipartFile image,@PathVariable(name="id")int id){
         try {
             byte[] imageByte = image.getBytes();
-            User user = new User();
-            user.setId(1);
+            User user = userRepository.getOne(id);
             user.setHeadPortrait(imageByte);
             userRepository.save(user);
         } catch (IOException e) {

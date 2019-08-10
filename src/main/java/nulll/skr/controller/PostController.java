@@ -29,27 +29,27 @@ public class PostController {
         return false;
     }
 
-    @PostMapping("/image")
-    public Boolean upLoad(MultipartFile image){
-
-        //////
-        try {
-            byte[] imageByte = image.getBytes();
-            Post post = new Post();
-            post.setId(1);
-            post.setImage(imageByte);
-            postRepository.save(post);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-
-        return true;
-
-        ///////
-    }
+//    @PostMapping("/image")
+//    public Boolean upLoad(MultipartFile image){
+//
+//        //////
+//        try {
+//            byte[] imageByte = image.getBytes();
+//            Post post = new Post();
+//            post.setId(1);
+//            post.setImage(imageByte);
+//            postRepository.save(post);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//
+//
+//        return true;
+//
+//        ///////
+//    }
 
     @GetMapping("/posts/{pageNum}")
     public List<Post> listPosts(@PathVariable(name="pageNum")int pageNum){
