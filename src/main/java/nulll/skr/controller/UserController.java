@@ -3,6 +3,7 @@ package nulll.skr.controller;
 import nulll.skr.pojo.Comment;
 import nulll.skr.pojo.Post;
 import nulll.skr.pojo.User;
+import nulll.skr.repository.CommentRepository;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class UserController {
     @Autowired
     private PostRepository postRepository;
 
-
+    @Autowired
+    private CommentRepository commentRepository;
 
     @PostMapping("/user")
     public boolean userRegister(User user){
@@ -129,48 +131,48 @@ public class UserController {
     }
 
 
-//    //评论
-//    public boolean makeComment(Comment com, Post postRel){
-//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-//        if(temp != null) {
-//            temp.addComment(com);
-//            //对帖子和评论两个仓库进行修改
-//            CommentController.getCommentRepository().save(com);
-//            PostController.getPostRepository().saveAndFlush(temp);
-//            return true;
-//        }
-//        return false;
-//    }
-//    public boolean deleteComment(Comment com, Post postRel){
-//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-//        if(temp != null) {
-//            temp.deleteComment(com);
-//            //对帖子和评论两个仓库进行修改
-//            CommentController.getCommentRepository().delete(com);
-//            PostController.getPostRepository().saveAndFlush(temp);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    //点赞
-//    public boolean makeLike(Post postRel){
-//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-//        if(temp != null) {
-//            temp.addLike();
-//            PostController.getPostRepository().saveAndFlush(temp);
-//            return true;
-//        }
-//        return false;
-//    }
-//    public boolean cancelLike(Post postRel){
-//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-//        if(temp != null) {
-//            temp.cancelLike();
-//            PostController.getPostRepository().saveAndFlush(temp);
-//            return true;
-//        }
-//        return false;
-//    }
+    //评论
+    public boolean makeComment(Comment com, Post postRel){
+        Post temp = postRepository.getOne(postRel.getId());
+        if(temp != null) {
+            temp.addComment(com);
+            //对帖子和评论两个仓库进行修改
+            commentRepository.save(com);
+            postRepository.saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
+    public boolean deleteComment(Comment com, Post postRel){
+        Post temp = postRepository.getOne(postRel.getId());
+        if(temp != null) {
+            temp.deleteComment(com);
+            //对帖子和评论两个仓库进行修改
+            commentRepository.delete(com);
+            postRepository.saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
+
+    //点赞
+    public boolean makeLike(Post postRel){
+        Post temp = postRepository.getOne(postRel.getId());
+        if(temp != null) {
+            temp.addLike();
+            postRepository.saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
+    public boolean cancelLike(Post postRel){
+        Post temp = postRepository.getOne(postRel.getId());
+        if(temp != null) {
+            temp.cancelLike();
+            postRepository.saveAndFlush(temp);
+            return true;
+        }
+        return false;
+    }
 
 }
