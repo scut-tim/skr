@@ -1,17 +1,15 @@
 package nulll.skr.pojo;
 
-
 import javax.persistence.*;
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "post")
 public class Post {
-    public Post(){}//到时要删
+    public Post(){}
     public Post(String title, String content, byte[] image, Integer likeNum,
                 Date date, User author, Set<Comment> commentSet, Snack snack) {
         this.title = title;
@@ -42,6 +40,14 @@ public class Post {
     @Column(name = "image")
     private byte[] image;
 
+    public Snack getSnack() {
+        return snack;
+    }
+
+    public void setSnack(Snack snack) {
+        this.snack = snack;
+    }
+
     @Column(name = "likeNum")
     private Integer likeNum;
 
@@ -62,7 +68,6 @@ public class Post {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -70,7 +75,6 @@ public class Post {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -78,7 +82,6 @@ public class Post {
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
@@ -86,11 +89,13 @@ public class Post {
     public byte[] getImage() {
         return image;
     }
-
     public void setImage(byte[] image) {
         this.image = image;
     }
 
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
     public Integer getLikeNum() {
         return likeNum;
     }
@@ -98,7 +103,6 @@ public class Post {
     public Date getDate() {
         return date;
     }
-
     public void setDate(Date date) {
         this.date = date;
     }
@@ -106,7 +110,6 @@ public class Post {
     public User getAuthor() {
         return author;
     }
-
     public void setAuthor(User author) {
         this.author = author;
     }
@@ -114,7 +117,6 @@ public class Post {
     public Set<Comment> getCommentSet() {
         return commentSet;
     }
-
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
     }
@@ -122,7 +124,6 @@ public class Post {
     public void addComment(Comment comment){
         commentSet.add(comment);
     }
-
     public void deleteComment(Comment comment) {
          commentSet.remove(comment);
     }
@@ -130,7 +131,6 @@ public class Post {
     public void addLike(){
         this.likeNum++;
     }
-
     public void cancelLike(){
         this.likeNum--;
     }

@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name="user")
 public class User implements Comparable<User>{
-    public User(){}//到时要删
+    public User(){}
     public User(String userName, String password, String email, Integer gender,
                 byte[] headPortrait, String personalProfile, Integer attentionNum,
                 Integer fansNum, Date birthday, Set<Comment> commentSet,
@@ -139,7 +139,6 @@ public class User implements Comparable<User>{
     public byte[] getHeadPortrait() {
         return headPortrait;
     }
-
     public void setHeadPortrait(byte[] headPortrait) {
         this.headPortrait = headPortrait;
     }
@@ -147,7 +146,6 @@ public class User implements Comparable<User>{
     public Set<Comment> getCommentSet() {
         return commentSet;
     }
-
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
     }
@@ -155,7 +153,6 @@ public class User implements Comparable<User>{
     public Set<Post> getPostSet() {
         return postSet;
     }
-
     public void setPostSet(Set<Post> postSet) {
         this.postSet = postSet;
     }
@@ -200,7 +197,6 @@ public class User implements Comparable<User>{
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
