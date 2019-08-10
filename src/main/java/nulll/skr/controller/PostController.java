@@ -1,7 +1,9 @@
 package nulll.skr.controller;
 
 import nulll.skr.pojo.Post;
+import nulll.skr.pojo.User;
 import nulll.skr.repository.PostRepository;
+import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,41 +17,64 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private static PostRepository postRepository;
-    static PostRepository getPostRepository(){
-        return  postRepository;
-    }
+    private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+
 
     @PostMapping("/post")
-    public boolean posting(Post post){
-        if(postRepository.getOne(post.getId())==null) {
-            postRepository.save(post);
-            return true;
+    public boolean posting(Post post,MultipartFile image,String userName){
+
+
+
+        System.out.println("=========/post=====");
+
+
+        System.out.println(image);
+
+
+
+        try {
+            post.setImage(image.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
+
+        User user = userRepository.findByUserName(userName);
+
+        post.setAuthor(user);
+
+        System.out.println(post);
+
+        postRepository.save(post);
+
+        return true;
     }
 
-//    @PostMapping("/image")
-//    public Boolean upLoad(MultipartFile image){
-//
-//        //////
-//        try {
-//            byte[] imageByte = image.getBytes();
-//            Post post = new Post();
-//            post.setId(1);
-//            post.setImage(imageByte);
-//            postRepository.save(post);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//
-//
-//        return true;
-//
-//        ///////
-//    }
+//    @PostMapping("/postImage")
+    public Boolean upLoad(MultipartFile image){
+
+        //////
+        try {
+            byte[] imageByte = image.getBytes();
+            Post post = new Post();
+            post.setId(1);
+            post.setImage(imageByte);
+            postRepository.save(post);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+        return true;
+
+        ///////
+    }
 
     @GetMapping("/posts/{pageNum}")
     public List<Post> listPosts(@PathVariable(name="pageNum")int pageNum){

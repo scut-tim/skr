@@ -1,5 +1,7 @@
 package nulll.skr.pojo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -134,5 +136,17 @@ public class Post {
     }
     public void cancelLike(){
         this.likeNum--;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", date=" + date +
+                ", author=" + author +
+                '}';
     }
 }

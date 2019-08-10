@@ -55,9 +55,11 @@ public class UserController {
 
             if(user1.getPassword().equals(user.getPassword())){
                 System.out.println(user1.getPassword());
-                Cookie cookie = new Cookie("user",user1.getUserName());
+                Cookie cookie1 = new Cookie("user",user1.getUserName());
+                Cookie cookie2 = new Cookie("userId",String.valueOf(user1.getId()));
                 httpServletRequest.getSession().setAttribute("userPassword",user.getPassword());
-                httpServletResponse.addCookie(cookie);
+                httpServletResponse.addCookie(cookie1);
+                httpServletResponse.addCookie(cookie2);
                 return true;
 
             }
@@ -127,48 +129,48 @@ public class UserController {
     }
 
 
-    //评论
-    public boolean makeComment(Comment com, Post postRel){
-        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-        if(temp != null) {
-            temp.addComment(com);
-            //对帖子和评论两个仓库进行修改
-            CommentController.getCommentRepository().save(com);
-            PostController.getPostRepository().saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
-    public boolean deleteComment(Comment com, Post postRel){
-        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-        if(temp != null) {
-            temp.deleteComment(com);
-            //对帖子和评论两个仓库进行修改
-            CommentController.getCommentRepository().delete(com);
-            PostController.getPostRepository().saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
-
-    //点赞
-    public boolean makeLike(Post postRel){
-        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-        if(temp != null) {
-            temp.addLike();
-            PostController.getPostRepository().saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
-    public boolean cancelLike(Post postRel){
-        Post temp = PostController.getPostRepository().getOne(postRel.getId());
-        if(temp != null) {
-            temp.cancelLike();
-            PostController.getPostRepository().saveAndFlush(temp);
-            return true;
-        }
-        return false;
-    }
+//    //评论
+//    public boolean makeComment(Comment com, Post postRel){
+//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.addComment(com);
+//            //对帖子和评论两个仓库进行修改
+//            CommentController.getCommentRepository().save(com);
+//            PostController.getPostRepository().saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
+//    public boolean deleteComment(Comment com, Post postRel){
+//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.deleteComment(com);
+//            //对帖子和评论两个仓库进行修改
+//            CommentController.getCommentRepository().delete(com);
+//            PostController.getPostRepository().saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    //点赞
+//    public boolean makeLike(Post postRel){
+//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.addLike();
+//            PostController.getPostRepository().saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
+//    public boolean cancelLike(Post postRel){
+//        Post temp = PostController.getPostRepository().getOne(postRel.getId());
+//        if(temp != null) {
+//            temp.cancelLike();
+//            PostController.getPostRepository().saveAndFlush(temp);
+//            return true;
+//        }
+//        return false;
+//    }
 
 }
