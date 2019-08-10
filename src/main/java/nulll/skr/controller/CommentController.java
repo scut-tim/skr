@@ -27,8 +27,10 @@ public class CommentController {
     @Autowired
     private UserRepository userRepository;
 
+
     @Autowired
     private PostRepository postRepository;
+
 
     @PostMapping("/comment")
     public boolean addComment(Comment comment,String userName,int postId){
@@ -41,15 +43,14 @@ public class CommentController {
 
         comment.setUser(user);
 
+
         System.out.println(comment);
 
+        comment.setUser(userRepository.findByUserName(userName));
+        comment.setPost(postRepository.getOne(postId));
         commentRepository.save(comment);
 
-        commentSet.add(comment);
 
-        post.setCommentSet(commentSet);
-
-        postRepository.saveAndFlush(post);
 
         return true;
     }

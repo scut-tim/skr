@@ -23,58 +23,39 @@ public class PostController {
     private UserRepository userRepository;
 
 
-
     @PostMapping("/post")
-    public boolean posting(Post post,MultipartFile image,String userName){
+    public boolean posting(Post post,MultipartFile postImage,String userName){
 
 
 
         System.out.println("=========/post=====");
 
-
-        System.out.println(image);
-
+        System.out.println("first: "+post);
 
 
-        try {
-            post.setImage(image.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        System.out.println(postImage);
+
+
+
+//        try {
+//            post.setImage(image.getBytes());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
 
         User user = userRepository.findByUserName(userName);
 
         post.setAuthor(user);
 
-        System.out.println(post);
+        System.out.println("second: "+post);
 
         postRepository.save(post);
 
         return true;
     }
 
-//    @PostMapping("/postImage")
-    public Boolean upLoad(MultipartFile image){
 
-        //////
-        try {
-            byte[] imageByte = image.getBytes();
-            Post post = new Post();
-            post.setId(1);
-            post.setImage(imageByte);
-            postRepository.save(post);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-
-        return true;
-
-        ///////
-    }
 
     @GetMapping("/posts/{pageNum}")
     public List<Post> listPosts(@PathVariable(name="pageNum")int pageNum){
