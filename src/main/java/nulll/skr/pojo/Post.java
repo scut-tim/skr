@@ -133,9 +133,11 @@ public class Post {
 
     public void addLike(){
         this.likeNum++;
+        this.snack.addLikeNum();
     }
     public void cancelLike(){
         this.likeNum--;
+        this.snack.reduceLikeNum();
     }
 
 
