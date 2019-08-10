@@ -89,4 +89,11 @@ public class Snack {
     public void deletePost(Post post){
         this.postSet.remove(post);
     }
+
+    public void addLikeNum(){
+        likeNum++;
+    }
+    public void reduceLikeNum(){
+        likeNum--;
+    }
 }
