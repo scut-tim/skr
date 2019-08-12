@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -122,8 +124,32 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public boolean updateUser(User user){
-        if(userRepository.getOne(user.getId())!=null){
+    public boolean updateUser(User user,MultipartFile putHeadPortrait,
+                              String putBirthday){
+
+
+
+
+        if(userRepository.findByUserName(user.getUserName())!=null){
+
+            try {
+                byte[] headPortrait = putHeadPortrait.getBytes();
+                user.setHeadPortrait(headPortrait);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                user.setBirthday(simpleDateFormat.parse(putBirthday));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            System.out.println(user);
+
             userRepository.saveAndFlush(user);
             return true;
         }

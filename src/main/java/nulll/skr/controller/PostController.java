@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,22 +28,17 @@ public class PostController {
 
     @PostMapping("/post")
     public boolean posting(Post post,MultipartFile postImage,
-                           String userName,String postDate){
-
-
+                           String userName,String postDate)  {
 
         System.out.println("=========/post=====");
 
-        System.out.println("first: "+post);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-
-        System.out.println("date: "+postDate);
-
-        System.out.println("image: "+postImage);
-
-        System.out.println("userName: "+userName);
-
-
+        try {
+            post.setDate(simpleDateFormat.parse(postDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         try {
             post.setImage(postImage.getBytes());
@@ -52,10 +50,6 @@ public class PostController {
         User user = userRepository.findByUserName(userName);
 
         post.setAuthor(user);
-
-
-
-        System.out.println("second: "+post);
 
         postRepository.save(post);
 

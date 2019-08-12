@@ -6,10 +6,7 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -216,7 +213,11 @@ public class User implements Comparable<User>{
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", gender=" + gender +
+                ", personalProfile='" + personalProfile + '\'' +
+                ", attentionNum=" + attentionNum +
+                ", fansNum=" + fansNum +
+                ", birthday=" + birthday +
                 '}';
     }
-
 }
