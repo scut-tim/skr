@@ -1,5 +1,7 @@
 package nulll.skr.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -85,6 +87,7 @@ public class User implements Comparable<User>{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     private Set<Post> postSet;
 

@@ -24,7 +24,8 @@ public class PostController {
 
 
     @PostMapping("/post")
-    public boolean posting(Post post,MultipartFile postImage,String userName){
+    public boolean posting(Post post,MultipartFile postImage,
+                           String userName,String postDate){
 
 
 
@@ -33,20 +34,26 @@ public class PostController {
         System.out.println("first: "+post);
 
 
-        System.out.println(postImage);
+        System.out.println("date: "+postDate);
+
+        System.out.println("image: "+postImage);
+
+        System.out.println("userName: "+userName);
 
 
 
-//        try {
-//            post.setImage(image.getBytes());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
+        try {
+            post.setImage(postImage.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
 
         User user = userRepository.findByUserName(userName);
 
         post.setAuthor(user);
+
+
 
         System.out.println("second: "+post);
 
@@ -59,12 +66,15 @@ public class PostController {
 
     @GetMapping("/posts/{pageNum}")
     public List<Post> listPosts(@PathVariable(name="pageNum")int pageNum){
-        Pageable pageable = new PageRequest(pageNum,10);
+        Pageable pageable = new PageRequest(pageNum,4);
         Page<Post> postPage = postRepository.findAll(pageable);
         List<Post> postList = postPage.getContent();
         System.out.println(postList);
         return postList;
     }
+
+
+
 
     @PutMapping("/post")
     public boolean updatePost(Post post){
