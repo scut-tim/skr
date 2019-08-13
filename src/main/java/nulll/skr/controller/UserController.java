@@ -1,13 +1,11 @@
 package nulll.skr.controller;
 
-import nulll.skr.pojo.Comment;
-import nulll.skr.pojo.Post;
+
 import nulll.skr.pojo.User;
-import nulll.skr.repository.CommentRepository;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
+import nulll.skr.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,8 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,8 +23,11 @@ import java.util.Date;
 @RestController
 public class UserController {
 
-    @Value("C:/skrImages")
-    private String imagePath;
+    @Value("${skr.User.imagePath}")
+    private String userImagePath;
+
+    @Autowired
+    private FileUploadUtils fileUploadUtils;
 
     @Autowired
     private UserRepository userRepository;
@@ -112,35 +112,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/headPortrait/{id}")
-    public Boolean upLoad(MultipartFile image,@PathVariable(name="id")int id){
-//        try {
-//            byte[] imageByte = image.getBytes();
-//            User user = userRepository.getOne(id);
-//            user.setHeadPortrait(imageByte);
-//            userRepository.save(user);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-        User user = userRepository.getOne(id);
-        String fileName = System.currentTimeMillis() + id + image.getOriginalFilename();
-        String fileDestination = imagePath + "/user/" + fileName;
-        System.out.println(fileDestination);
-        File destFile = new File(fileDestination);
-        destFile.getParentFile().mkdirs();
-        try {
-            image.transferTo(destFile);
-            user.setHeadPortrait(fileDestination);
-            userRepository.save(user);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
 
-         return true;
-
-    }
 
     @PutMapping("/user")
     public boolean updateUser(User user,MultipartFile putHeadPortrait,
@@ -148,19 +120,13 @@ public class UserController {
 
 
         System.out.println("putHeadPortrait: "+putHeadPortrait);
-
+        System.out.println("putBirthday: "+putBirthday);
 
         if(userRepository.findByUserName(user.getUserName())!=null){
 
+            String headPortrait = fileUploadUtils.uploadFile(putHeadPortrait,userImagePath);
+            user.setHeadPortrait(headPortrait);
 
-             upLoad(putHeadPortrait,user.getId());
-
-//            try {
-//                byte[] headPortrait = putHeadPortrait.getBytes();
-//                user.setHeadPortrait(headPortrait);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
