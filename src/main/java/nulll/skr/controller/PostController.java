@@ -5,11 +5,17 @@ import nulll.skr.pojo.User;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +25,9 @@ import java.util.List;
 @RestController
 public class PostController {
 
+    @Value("${skr.imagePath}")
+    private String imagePath;
+
     @Autowired
     private PostRepository postRepository;
 
@@ -27,10 +36,13 @@ public class PostController {
 
 
     @PostMapping("/post")
-    public boolean posting(Post post,MultipartFile postImage,
-                           String userName,String postDate)  {
+    public boolean posting(Post post, MultipartFile postImage,
+                           String userName, String postDate,
+                           HttpServletRequest request) throws FileNotFoundException {
 
         System.out.println("=========/post=====");
+
+
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -40,16 +52,25 @@ public class PostController {
             e.printStackTrace();
         }
 
-//        try {
-//            post.setImage(postImage.getBytes());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
+        //处理图片，将图片保存在skr.imagePath所指定的位置
+        String fileName = System.currentTimeMillis()+postImage.getOriginalFilename();
+        String fileDestination = imagePath+"/post/"+fileName;
+        System.out.println(fileDestination);
+        File destFile = new File(fileDestination);
+        destFile.getParentFile().mkdirs();
+        try {
+            postImage.transferTo(destFile);
+            post.setImage(fileDestination);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         User user = userRepository.findByUserName(userName);
 
         post.setAuthor(user);
+
+
 
         postRepository.save(post);
 

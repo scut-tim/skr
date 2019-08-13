@@ -34,9 +34,10 @@ public class UserController {
 //    private CommentRepository commentRepository;
 
     @PostMapping("/user")
-    public boolean userRegister(User user){
+    public boolean userRegister(User user,HttpServletRequest request){
 
         if(userRepository.findByUserName(user.getUserName())==null){
+            request.getSession().setAttribute("LoginUser",user.getUserName());
             userRepository.save(user);
             return true;
         }

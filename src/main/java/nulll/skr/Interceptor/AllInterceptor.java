@@ -29,6 +29,7 @@ public class AllInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        System.out.println("已登录");
 
         return true;
     }
