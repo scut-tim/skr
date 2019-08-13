@@ -39,7 +39,7 @@ public class PostController {
     @PostMapping("/post")
     public boolean posting(Post post, MultipartFile postImage,
                            String userName, String postDate,
-                           HttpServletRequest request) throws FileNotFoundException {
+                           HttpServletRequest request) {
 
         System.out.println("=========/post=====");
 

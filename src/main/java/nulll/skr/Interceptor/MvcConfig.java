@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-    @Value("${skr.imagePath}")
+    @Value("${skr.Post.imagePath}")
     private String imagePath;
 
     @Resource
@@ -35,7 +35,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 
         resourceHandlerRegistry.addResourceHandler("/image/**")
-                .addResourceLocations(imagePath);
+                .addResourceLocations("file:"+imagePath);
 
     }
 

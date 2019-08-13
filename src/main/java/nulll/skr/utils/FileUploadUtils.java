@@ -10,7 +10,7 @@ import java.io.IOException;
 @Component
 public class FileUploadUtils {
 
-    @Value("${skr.imagePath}")
+    @Value("${skr.Post.imagePath}")
     private String imagePath;
 
 
