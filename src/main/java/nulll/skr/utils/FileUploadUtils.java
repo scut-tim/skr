@@ -10,13 +10,12 @@ import java.io.IOException;
 @Component
 public class FileUploadUtils {
 
-    @Value("${skr.Post.imagePath}")
-    private String imagePath;
 
 
-    public String uploadFile(MultipartFile postImage){
 
-        //处理图片，将图片保存在skr.imagePath所指定的位置
+    public String uploadFile(MultipartFile postImage,String imagePath){
+
+        //处理图片
         String fileName = System.currentTimeMillis()+postImage.getOriginalFilename();
         String fileDestination = imagePath+fileName;
         System.out.println(fileDestination);

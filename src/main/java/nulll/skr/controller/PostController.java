@@ -35,6 +35,8 @@ public class PostController {
     @Autowired
     private UserRepository userRepository;
 
+    @Value("${skr.Post.imagePath}")
+    private String postImagePath;
 
     @PostMapping("/post")
     public boolean posting(Post post, MultipartFile postImage,
@@ -53,8 +55,8 @@ public class PostController {
             e.printStackTrace();
         }
 
-        //处理图片，将图片保存在skr.imagePath所指定的位置
-        String image =  fileUploadUtils.uploadFile(postImage);
+        //处理图片，将图片保存在skr.Post.imagePath所指定的位置
+        String image =  fileUploadUtils.uploadFile(postImage,postImagePath);
 
         post.setImage(image);
 
@@ -99,4 +101,13 @@ public class PostController {
         else
             return false;
     }
+
+    @GetMapping("/searchedPost")
+    public List<Post> searchPost(String keyWord){
+
+
+        return null;
+
+    }
+
 }
