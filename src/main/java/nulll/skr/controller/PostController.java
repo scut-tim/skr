@@ -40,12 +40,12 @@ public class PostController {
             e.printStackTrace();
         }
 
-        try {
-            post.setImage(postImage.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+//        try {
+//            post.setImage(postImage.getBytes());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
 
         User user = userRepository.findByUserName(userName);
 

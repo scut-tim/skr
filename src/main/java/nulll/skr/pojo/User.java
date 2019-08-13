@@ -14,7 +14,7 @@ import java.util.*;
 public class User implements Comparable<User>{
     public User(){}
     public User(String userName, String password, String email, Integer gender,
-                byte[] headPortrait, String personalProfile, Integer attentionNum,
+                String headPortrait, String personalProfile, Integer attentionNum,
                 Integer fansNum, Date birthday, Set<Comment> commentSet,
                 Set<Post> postSet) {
         this.userName = userName;
@@ -24,7 +24,7 @@ public class User implements Comparable<User>{
             this.gender = 1;// 默认1为男性
         }
         if(headPortrait == null) {
-            this.headPortrait = new byte[1];//可以改为默认图片，先设为空
+            this.headPortrait = null;//可以改为默认图片，先设为空
         }
         if(personalProfile == null) {
             this.personalProfile = "";
@@ -66,7 +66,7 @@ public class User implements Comparable<User>{
     private Integer gender;
 
     @Column(name = "headPortrait")
-    private byte[] headPortrait;
+    private String headPortrait;
 
 
     @Column(name = "personalProfile")
@@ -136,10 +136,11 @@ public class User implements Comparable<User>{
     }
 
 
-    public byte[] getHeadPortrait() {
+    public String getHeadPortrait() {
         return headPortrait;
     }
-    public void setHeadPortrait(byte[] headPortrait) {
+
+    public void setHeadPortrait(String headPortrait) {
         this.headPortrait = headPortrait;
     }
 

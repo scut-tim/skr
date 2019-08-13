@@ -61,7 +61,7 @@ public class UserController {
                 System.out.println(user1.getPassword());
                 Cookie cookie1 = new Cookie("user",user1.getUserName());
                 Cookie cookie2 = new Cookie("userId",String.valueOf(user1.getId()));
-                httpServletRequest.getSession().setAttribute("userPassword",user.getPassword());
+                httpServletRequest.getSession().setAttribute("LoginUser",user.getUserName());
                 httpServletResponse.addCookie(cookie1);
                 httpServletResponse.addCookie(cookie2);
                 return true;
@@ -83,7 +83,7 @@ public class UserController {
             String userName = user1.getUserName();
             String email = user1.getEmail();
             Integer gender = user1.getGender();
-            byte[] headPortrait = user1.getHeadPortrait();
+            //byte[] headPortrait = user1.getHeadPortrait();
             String personalProfile = user1.getPersonalProfile();
             Integer attentionNum = user1.getAttentionNum();
             Integer fansNum = user1.getFansNum();
@@ -108,18 +108,18 @@ public class UserController {
 
     @PostMapping("/headPortrait/{id}")
     public Boolean upLoad(MultipartFile image,@PathVariable(name="id")int id){
-        try {
-            byte[] imageByte = image.getBytes();
-            User user = userRepository.getOne(id);
-            user.setHeadPortrait(imageByte);
-            userRepository.save(user);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-
-        return true;
+//        try {
+//            byte[] imageByte = image.getBytes();
+//            User user = userRepository.getOne(id);
+//            user.setHeadPortrait(imageByte);
+//            userRepository.save(user);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//
+//
+         return true;
 
     }
 
@@ -132,12 +132,12 @@ public class UserController {
 
         if(userRepository.findByUserName(user.getUserName())!=null){
 
-            try {
-                byte[] headPortrait = putHeadPortrait.getBytes();
-                user.setHeadPortrait(headPortrait);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                byte[] headPortrait = putHeadPortrait.getBytes();
+//                user.setHeadPortrait(headPortrait);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

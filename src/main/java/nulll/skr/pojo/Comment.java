@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "comment")
-public class Comment extends Snack {
+public class Comment{
     public Comment(User user, String content, Date date, Post post) {
         this.user = user;
         this.content = content;

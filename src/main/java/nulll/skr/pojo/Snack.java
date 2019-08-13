@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "snack")
 public class Snack implements Comparable<Snack>{
     public Snack(){}
-    public Snack(String name, Integer price, Integer likeNum, byte[] image, Set<Post> postSet) {
+    public Snack(String name, Integer price, Integer likeNum, String image, Set<Post> postSet) {
         this.name = name;
         this.price = price;
         this.likeNum = likeNum;
@@ -36,7 +36,7 @@ public class Snack implements Comparable<Snack>{
     private Integer likeNum;
 
     @Column(name = "image")
-    private byte[] image;
+    private String image;
 
     @OneToMany(mappedBy = "snack",cascade = CascadeType.ALL)
     private Set<Post> postSet;
@@ -70,10 +70,11 @@ public class Snack implements Comparable<Snack>{
         this.likeNum = likeNum;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
-    public void setImage(byte[] image) {
+
+    public void setImage(String image) {
         this.image = image;
     }
 

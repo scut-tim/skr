@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "post")
 public class Post {
     public Post(){}
-    public Post(String title, String content, byte[] image, Integer likeNum,
+    public Post(String title, String content, String image, Integer likeNum,
                 Date date, User author, Set<Comment> commentSet, Snack snack) {
         this.title = title;
         this.content = content;
@@ -41,7 +41,7 @@ public class Post {
     private String content;
 
     @Column(name = "image")
-    private byte[] image;
+    private String image;
 
     public Snack getSnack() {
         return snack;
@@ -89,10 +89,11 @@ public class Post {
         this.content = content;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
-    public void setImage(byte[] image) {
+
+    public void setImage(String image) {
         this.image = image;
     }
 
