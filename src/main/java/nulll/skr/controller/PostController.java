@@ -4,6 +4,7 @@ import nulll.skr.pojo.Post;
 import nulll.skr.pojo.User;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
+import nulll.skr.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,8 @@ import java.util.List;
 @RestController
 public class PostController {
 
-    @Value("${skr.imagePath}")
-    private String imagePath;
+    @Autowired
+    private FileUploadUtils fileUploadUtils;
 
     @Autowired
     private PostRepository postRepository;
@@ -53,18 +54,9 @@ public class PostController {
         }
 
         //处理图片，将图片保存在skr.imagePath所指定的位置
-        String fileName = System.currentTimeMillis()+postImage.getOriginalFilename();
-        String fileDestination = imagePath+"/post/"+fileName;
-        System.out.println(fileDestination);
-        File destFile = new File(fileDestination);
-        destFile.getParentFile().mkdirs();
-        try {
-            postImage.transferTo(destFile);
-            post.setImage(fileDestination);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String image =  fileUploadUtils.uploadFile(postImage);
 
+        post.setImage(image);
 
         User user = userRepository.findByUserName(userName);
 

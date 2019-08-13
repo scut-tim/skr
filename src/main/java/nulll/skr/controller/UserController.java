@@ -129,16 +129,10 @@ public class UserController {
                               String putBirthday){
 
 
+        System.out.println("putHeadPortrait: "+putHeadPortrait);
 
 
         if(userRepository.findByUserName(user.getUserName())!=null){
-
-//            try {
-//                byte[] headPortrait = putHeadPortrait.getBytes();
-//                user.setHeadPortrait(headPortrait);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -151,7 +145,7 @@ public class UserController {
 
             System.out.println(user);
 
-            userRepository.saveAndFlush(user);
+            //userRepository.saveAndFlush(user);
             return true;
         }
         return false;

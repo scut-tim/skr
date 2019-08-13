@@ -1,6 +1,7 @@
 package nulll.skr.Interceptor;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -8,11 +9,13 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
+
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
+    @Value("${skr.imagePath}")
+    private String imagePath;
 
     @Resource
     private AllInterceptor allInterceptor;
@@ -27,14 +30,14 @@ public class MvcConfig implements WebMvcConfigurer {
 
     }
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry){
-//
-//
-//        resourceHandlerRegistry.addResourceHandler("/static/**")
-//                .addResourceLocations("classpath:/static/");
-//
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry){
+
+
+        resourceHandlerRegistry.addResourceHandler("/image/**")
+                .addResourceLocations(imagePath);
+
+    }
 
 
 
