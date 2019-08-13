@@ -7,13 +7,12 @@ import nulll.skr.repository.CommentRepository;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,26 +32,33 @@ public class CommentController {
 
 
     @PostMapping("/comment")
-    public boolean addComment(Comment comment,String userName,int postId){
+    public boolean addComment(Comment comment,String userName,
+                              int postId, String commentDate){
 
-        Post post = postRepository.getOne(postId);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Set<Comment> commentSet = post.getCommentSet();
+        try {
+            comment.setDate(simpleDateFormat.parse(commentDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        User user = userRepository.findByUserName(userName);
-
-        comment.setUser(user);
-
-
-        System.out.println(comment);
 
         comment.setUser(userRepository.findByUserName(userName));
         comment.setPost(postRepository.getOne(postId));
+
+        System.out.println(comment);
         commentRepository.save(comment);
 
-
-
         return true;
+    }
+
+    @GetMapping("/comments/{pageNum}")
+    public List<Comment> listComments(@PathVariable(name="pageNum")int pageNum){
+        Pageable pageable = new PageRequest(pageNum,6);
+        Page<Comment> commentPage = commentRepository.findAll(pageable);
+        List<Comment> commentList = commentPage.getContent();
+        return commentList;
     }
 
     @PutMapping("/comment")

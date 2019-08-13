@@ -8,12 +8,14 @@ import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 import java.text.ParseException;
@@ -23,6 +25,9 @@ import java.util.Date;
 
 @RestController
 public class UserController {
+
+    @Value("C:/skrImages")
+    private String imagePath;
 
     @Autowired
     private UserRepository userRepository;
@@ -118,8 +123,21 @@ public class UserController {
 //            e.printStackTrace();
 //            return false;
 //        }
-//
-//
+        User user = userRepository.getOne(id);
+        String fileName = System.currentTimeMillis() + id + image.getOriginalFilename();
+        String fileDestination = imagePath + "/user/" + fileName;
+        System.out.println(fileDestination);
+        File destFile = new File(fileDestination);
+        destFile.getParentFile().mkdirs();
+        try {
+            image.transferTo(destFile);
+            user.setHeadPortrait(fileDestination);
+            userRepository.save(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
          return true;
 
     }
@@ -133,6 +151,16 @@ public class UserController {
 
 
         if(userRepository.findByUserName(user.getUserName())!=null){
+
+
+             upLoad(putHeadPortrait,user.getId());
+
+//            try {
+//                byte[] headPortrait = putHeadPortrait.getBytes();
+//                user.setHeadPortrait(headPortrait);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
