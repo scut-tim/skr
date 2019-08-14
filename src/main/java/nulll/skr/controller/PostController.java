@@ -45,8 +45,6 @@ public class PostController {
 
         System.out.println("=========/post=====");
 
-
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
@@ -64,8 +62,6 @@ public class PostController {
 
         post.setAuthor(user);
 
-
-
         postRepository.save(post);
 
         return true;
@@ -82,6 +78,14 @@ public class PostController {
         return postList;
     }
 
+
+    @GetMapping("/post/{id}")
+    public Post getPost(@PathVariable(name="id")int id){
+
+        Post post = postRepository.getOne(id);
+        return post;
+
+    }
 
 
 
@@ -104,6 +108,8 @@ public class PostController {
 
     @GetMapping("/searchedPost")
     public List<Post> searchPost(String keyWord){
+
+
 
 
         return null;
