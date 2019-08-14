@@ -32,8 +32,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PostRepository postRepository;
+
 
 //    @Autowired
 //    private CommentRepository commentRepository;
@@ -106,7 +105,7 @@ public class UserController {
         User user = userRepository.getOne(id);
         if(user != null){
 
-            user.setPostSet(postRepository.findByAuthor_Id(id));
+            user.setPostSet(user.getPostSet());
             return user;
         }
         return null;
@@ -123,7 +122,7 @@ public class UserController {
         System.out.println("putHeadPortrait: "+putHeadPortrait);
         System.out.println("putBirthday: "+putBirthday);
 
-        if(userRepository.findByUserName(user.getUserName())!=null){
+
 
             String headPortrait = fileUploadUtils.uploadFile(putHeadPortrait,userImagePath);
             user.setHeadPortrait(headPortrait);
@@ -140,10 +139,9 @@ public class UserController {
 
             System.out.println(user);
 
-            //userRepository.saveAndFlush(user);
+            userRepository.saveAndFlush(user);
             return true;
-        }
-        return false;
+
     }
 
 

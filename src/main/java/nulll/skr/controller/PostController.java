@@ -2,6 +2,7 @@ package nulll.skr.controller;
 
 import nulll.skr.pojo.Post;
 import nulll.skr.pojo.User;
+import nulll.skr.repository.CommentRepository;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import nulll.skr.utils.FileUploadUtils;
@@ -25,6 +26,9 @@ import java.util.List;
 
 @RestController
 public class PostController {
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private FileUploadUtils fileUploadUtils;
@@ -83,6 +87,7 @@ public class PostController {
     public Post getPost(@PathVariable(name="id")int id){
 
         Post post = postRepository.getOne(id);
+
         return post;
 
     }
@@ -112,6 +117,15 @@ public class PostController {
     public List<Post> searchPost(String keyWord){
 
 
+
+
+        return null;
+
+    }
+
+
+    @GetMapping("/postsOfLike")
+    public List<Post> getPostsOfLike(int userId){
 
 
         return null;

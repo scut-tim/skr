@@ -92,6 +92,11 @@ public class User implements Comparable<User>{
     private Set<Post> postSet;
 
 
+    @ManyToMany(targetEntity = Post.class)
+    @JoinTable(name="user_post_like",
+            joinColumns={@JoinColumn(name="user_post",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name="post_user",referencedColumnName = "id")})
+    private Set<Post> postsOfLike;
 
 
     public Integer getAttentionNum() {

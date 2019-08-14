@@ -9,6 +9,8 @@ import java.util.Date;
 @Entity
 @Table(name = "comment")
 public class Comment{
+    public Comment(){}
+
 
     public Comment(User user, String content, Date date, Post post) {
         this.user = user;

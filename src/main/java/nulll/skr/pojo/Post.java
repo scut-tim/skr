@@ -73,6 +73,11 @@ public class Post {
     @JoinColumn(name="post_snack",referencedColumnName = "id")
     private Snack snack;
 
+
+
+    @ManyToMany(mappedBy = "postsOfLike",cascade = CascadeType.ALL)
+    private Set<User> usersOfLike;
+
     public Integer getId() {
         return id;
     }

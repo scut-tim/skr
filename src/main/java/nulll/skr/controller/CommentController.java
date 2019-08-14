@@ -32,8 +32,11 @@ public class CommentController {
 
 
     @PostMapping("/comment")
-    public boolean addComment(Comment comment,String userName,
+    public boolean addComment(String content,String userName,
                               int postId, String commentDate){
+
+        Comment comment = new Comment();
+        comment.setContent(content);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -47,18 +50,21 @@ public class CommentController {
         comment.setUser(userRepository.findByUserName(userName));
         comment.setPost(postRepository.getOne(postId));
 
-        System.out.println(comment);
+
         commentRepository.save(comment);
 
         return true;
     }
 
     @GetMapping("/comments/{pageNum}")
-    public List<Comment> listComments(@PathVariable(name="pageNum")int pageNum){
+    public List<Comment> listComments(int postId,
+                                      @PathVariable(name="pageNum")int pageNum){
+
         Pageable pageable = new PageRequest(pageNum,6);
-        Page<Comment> commentPage = commentRepository.findAll(pageable);
+        Page<Comment> commentPage = commentRepository.findAllByPost_Id(postId,pageable);
         List<Comment> commentList = commentPage.getContent();
         return commentList;
+
     }
 
     @PutMapping("/comment")
