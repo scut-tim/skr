@@ -14,7 +14,7 @@ import java.util.Set;
 @Repository
 public interface PostRepository extends JpaRepository<Post,Integer>, JpaSpecificationExecutor<Post> {
 
-    public Set<Post> findAllByAuthor(User user);
+    public Set<Post> findByAuthor_Id(int id);
 
 
 

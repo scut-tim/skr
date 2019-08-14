@@ -89,6 +89,8 @@ public class User implements Comparable<User>{
     private Set<Post> postSet;
 
 
+
+
     public Integer getAttentionNum() {
         return attentionNum;
     }

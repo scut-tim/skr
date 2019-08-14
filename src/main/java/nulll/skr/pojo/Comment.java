@@ -1,5 +1,7 @@
 package nulll.skr.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "comment")
 public class Comment{
+
     public Comment(User user, String content, Date date, Post post) {
         this.user = user;
         this.content = content;
@@ -27,7 +30,6 @@ public class Comment{
     private String content;
     @Column(name="date")
     private Date date;
-
 
     @ManyToOne(targetEntity = Post.class)
     @JoinColumn(name="comment_post",referencedColumnName = "id")
