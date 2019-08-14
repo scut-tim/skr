@@ -1,7 +1,6 @@
 package nulll.skr.pojo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -11,6 +10,9 @@ import java.util.*;
 
 @Entity
 @Table(name="user")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User implements Comparable<User>{
     public User(){}
     public User(String userName, String password, String email, Integer gender,
@@ -84,7 +86,8 @@ public class User implements Comparable<User>{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 
-    @JsonBackReference
+
+
     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     private Set<Post> postSet;
 
@@ -153,12 +156,16 @@ public class User implements Comparable<User>{
         this.commentSet = commentSet;
     }
 
+
     public Set<Post> getPostSet() {
         return postSet;
     }
+
     public void setPostSet(Set<Post> postSet) {
         this.postSet = postSet;
     }
+
+
     public void addPost(Post post){
         this.postSet.add(post);
     }

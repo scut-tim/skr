@@ -105,6 +105,8 @@ public class UserController {
 
         User user = userRepository.getOne(id);
         if(user != null){
+
+            user.setPostSet(postRepository.findByAuthor_Id(id));
             return user;
         }
         return null;

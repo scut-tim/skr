@@ -1,5 +1,7 @@
 package nulll.skr.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -10,6 +12,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "post")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Post {
     public Post(){}
     public Post(String title, String content, String image, Integer likeNum,
