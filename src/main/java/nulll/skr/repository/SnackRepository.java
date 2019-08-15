@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface SnackRepository extends JpaRepository<Snack,Integer> {
-    List<Snack> findAllByOrderByLikeNumDesc();
+    public List<Snack> findAllByOrderByLikeNumDesc();
 }

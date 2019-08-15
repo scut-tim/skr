@@ -30,6 +30,7 @@ public class Comment{
 
     @Column(name="content")
     private String content;
+
     @Column(name="date")
     private Date date;
 
@@ -68,8 +69,18 @@ public class Comment{
     public Post getPost() {
         return post;
     }
-
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", user='" + user + '\'' +
+                ", content='" + content + '\'' +
+                ", date=" + date +
+                ", post=" + post +
+                '}';
     }
 }
