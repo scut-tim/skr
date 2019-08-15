@@ -35,6 +35,9 @@ public class CommentController {
     public boolean addComment(String content,String userName,
                               int postId, String commentDate){
 
+
+        System.out.println("===================comment================");
+
         Comment comment = new Comment();
         comment.setContent(content);
 
@@ -56,13 +59,12 @@ public class CommentController {
         return true;
     }
 
-    @GetMapping("/comments/{pageNum}")
-    public List<Comment> listComments(int postId,
-                                      @PathVariable(name="pageNum")int pageNum){
+    @GetMapping("/comments")
+    public List<Comment> listComments(int postId){
 
-        Pageable pageable = new PageRequest(pageNum,6);
-        Page<Comment> commentPage = commentRepository.findAllByPost_Id(postId,pageable);
-        List<Comment> commentList = commentPage.getContent();
+        List<Comment> commentList= commentRepository.findAllByPost_Id(postId);
+
+
         return commentList;
 
     }

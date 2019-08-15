@@ -1,6 +1,7 @@
 package nulll.skr.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,6 +35,8 @@ public class Comment{
     @Column(name="date")
     private Date date;
 
+
+    @JsonIgnore
     @ManyToOne(targetEntity = Post.class)
     @JoinColumn(name="comment_post",referencedColumnName = "id")
     private Post post;

@@ -61,7 +61,7 @@ public class Post {
     @Column(name="date")
     private Date date;
 
-    @JsonIgnoreProperties("postSet")
+    @JsonIgnoreProperties({"postSet","postsOfLike"})
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name="post_author",referencedColumnName = "id")
     private User author;
@@ -76,7 +76,7 @@ public class Post {
 
 
     @ManyToMany(mappedBy = "postsOfLike",cascade = CascadeType.ALL)
-    private Set<User> usersOfLike;
+    private Set<User> usersOfLike = new HashSet<>();
 
     public Integer getId() {
         return id;

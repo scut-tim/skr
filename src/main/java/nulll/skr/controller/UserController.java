@@ -106,6 +106,7 @@ public class UserController {
         if(user != null){
 
             user.setPostSet(user.getPostSet());
+            user.setPostsOfLike(user.getPostsOfLike());
             return user;
         }
         return null;
