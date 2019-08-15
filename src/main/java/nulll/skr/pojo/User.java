@@ -9,9 +9,9 @@ import java.util.*;
 
 @Entity
 @Table(name="user")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class User implements Comparable<User>{
     public User(){}
     public User(String userName, String password, String email, Integer gender,
@@ -84,7 +84,6 @@ public class User implements Comparable<User>{
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
-
 
 
     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)

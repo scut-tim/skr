@@ -1,6 +1,7 @@
 package nulll.skr.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,6 +61,7 @@ public class Post {
     @Column(name="date")
     private Date date;
 
+    @JsonIgnoreProperties("postSet")
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name="post_author",referencedColumnName = "id")
     private User author;
@@ -125,6 +127,8 @@ public class Post {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+
 
     public Set<Comment> getCommentSet() {
         return commentSet;
