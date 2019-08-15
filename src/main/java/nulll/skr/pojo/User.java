@@ -82,6 +82,8 @@ public class User implements Comparable<User>{
     @Column(name = "birthday")
     private Date birthday;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 

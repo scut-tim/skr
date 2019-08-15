@@ -88,6 +88,8 @@ public class PostController {
     public Post getPost(@PathVariable(name="id")int id){
 
         Post post = postRepository.getOne(id);
+        post.setCommentSet(post.getCommentSet());
+
 
         return post;
 
@@ -97,8 +99,14 @@ public class PostController {
 
 
 
-    @PutMapping("/post")
-    public boolean updatePost(Post post){
+    @PutMapping("/post/{id}")
+    public boolean updatePost(@PathVariable(name="id")int id,
+                              int userId){
+
+        Post post = postRepository.getOne(id);
+        post.setLikeNum(post.getLikeNum()+1);
+
+        post.getUsersOfLike().add(userRepository.getOne(userId));
         postRepository.saveAndFlush(post);
         return true;
     }
@@ -144,8 +152,15 @@ public class PostController {
 
 
 
-//    @GetMapping("/billboard")
-//    public Set<Post>
+
+
+
+//    @GetMapping("/billboardOfLike")
+//    public Set<Post> getBillboardOfLike(){
+//
+//
+//
+//    }
 
 
 }
