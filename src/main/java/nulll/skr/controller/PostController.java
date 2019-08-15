@@ -114,13 +114,19 @@ public class PostController {
             return false;
     }
 
-    @GetMapping("/searchedPost")
-    public List<Post> searchPost(String keyWord){
+    @GetMapping("/searchedPosts/{pageNum}")
+    public List<Post> searchPost(String keyWord,
+                                 @PathVariable(name="pageNum")int pageNum){
 
-
-
-
-        return null;
+        Pageable pageable = new PageRequest(pageNum,4);
+        Page<Post> postPage = postRepository.findAllByTitleOrContentContaining(keyWord, keyWord, pageable);
+        List<Post> postList = postPage.getContent();
+        if(postList != null){
+            System.out.println(postList);
+            return postList;
+        }
+        else
+            return null;
 
     }
 
