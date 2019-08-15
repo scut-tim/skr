@@ -12,9 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "post")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+
 public class Post {
     public Post(){}
     public Post(String title, String content, String image, Integer likeNum,
@@ -151,6 +149,14 @@ public class Post {
         this.snack.reduceLikeNum();
     }
 
+
+    public Set<User> getUsersOfLike() {
+        return usersOfLike;
+    }
+
+    public void setUsersOfLike(Set<User> usersOfLike) {
+        this.usersOfLike = usersOfLike;
+    }
 
     @Override
     public String toString() {

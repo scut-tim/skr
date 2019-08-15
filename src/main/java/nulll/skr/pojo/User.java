@@ -1,7 +1,6 @@
 package nulll.skr.pojo;
 
 import com.fasterxml.jackson.annotation.*;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -214,6 +213,15 @@ public class User implements Comparable<User>{
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public Set<Post> getPostsOfLike() {
+        return postsOfLike;
+    }
+
+    public void setPostsOfLike(Set<Post> postsOfLike) {
+        this.postsOfLike = postsOfLike;
     }
 
     @Override

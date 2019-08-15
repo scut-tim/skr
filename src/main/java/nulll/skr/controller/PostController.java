@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class PostController {
@@ -125,10 +126,13 @@ public class PostController {
 
 
     @GetMapping("/postsOfLike")
-    public List<Post> getPostsOfLike(int userId){
+    public Set<Post> getPostsOfLike(int userId){
 
 
-        return null;
+        User user = userRepository.getOne(userId);
+        Set<Post> postsOfLike = user.getPostsOfLike();
+
+        return postsOfLike;
 
     }
 
