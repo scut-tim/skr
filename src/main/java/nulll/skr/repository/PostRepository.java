@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post,Integer>, JpaSpecific
 
     public Set<Post> findByAuthor_Id(int id);
 
-    public Page<Post> findAllByTitleOrContentContaining(String keyWord, String keyword, Pageable pageable);
+    public Page<Post> findAllByTitleOrContentContaining(String titleKeyword, String contentKeyword, Pageable pageable);
 
 
 
