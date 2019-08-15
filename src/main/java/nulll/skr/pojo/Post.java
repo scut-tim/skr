@@ -66,6 +66,7 @@ public class Post {
     @JoinColumn(name="post_author",referencedColumnName = "id")
     private User author;
 
+
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 

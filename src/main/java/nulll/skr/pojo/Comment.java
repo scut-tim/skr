@@ -2,6 +2,7 @@ package nulll.skr.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,6 +26,8 @@ public class Comment{
     @Column(name="id")
     private Integer id;
 
+
+    @JsonIgnoreProperties("postSet")
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name="comment_user",referencedColumnName = "id")
     private User user;
@@ -34,6 +37,7 @@ public class Comment{
 
     @Column(name="date")
     private Date date;
+
 
 
     @JsonIgnore
