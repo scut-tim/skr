@@ -74,10 +74,10 @@ public class User implements Comparable<User>{
     private String personalProfile;
 
     @Column(name = "attentionNum")
-    private Integer attentionNum = 0;
+    private Integer attentionNum = new Integer(0);
 
     @Column(name = "fansNum")
-    private Integer fansNum = 0;
+    private Integer fansNum = new Integer(0);
 
     @Column(name = "birthday")
     private Date birthday;
@@ -112,9 +112,11 @@ public class User implements Comparable<User>{
         this.attentionNum = attentionNum;
     }
     public void addAttentionNum(){
+        if(this.attentionNum == null) attentionNum = 0;
         setAttentionNum(this.attentionNum+1);
     }
     public void subAttentionNum(){
+        if(this.attentionNum == null) attentionNum = 0;
         setAttentionNum(this.attentionNum-1);
     }
 
@@ -128,10 +130,16 @@ public class User implements Comparable<User>{
         this.fansNum = fansNum;
     }
     public void addFansNum(){
+
+        if(this.fansNum == null)fansNum = 0;
+
         setFansNum(this.fansNum+1);
     }
     public void subFansNum(){
+
+        if(this.fansNum == null)fansNum = 0;
         setFansNum(this.fansNum-1);
+
     }
 
     public Date getBirthday() {

@@ -148,10 +148,12 @@ public class UserController {
 
     @PutMapping("/user/{id}")
     public boolean attentionUser(@PathVariable(name="id")int id,boolean attention
-                                ,int userId1){
+                                ,int userId){
 
         User user = userRepository.getOne(id);
-        User user1 = userRepository.getOne(userId1);
+        User user1 = userRepository.getOne(userId);
+        System.out.println(user);
+
         if(attention == true){
             user.addFansNum();
             user1.addAttentionNum();
