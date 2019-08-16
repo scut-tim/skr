@@ -64,7 +64,7 @@ public class User implements Comparable<User>{
     private String email;
 
     @Column(name ="gender")
-    private Integer gender;
+    private Integer gender = 0;
 
     @Column(name = "headPortrait")
     private String headPortrait;
@@ -74,10 +74,10 @@ public class User implements Comparable<User>{
     private String personalProfile;
 
     @Column(name = "attentionNum")
-    private Integer attentionNum;
+    private Integer attentionNum = 0;
 
     @Column(name = "fansNum")
-    private Integer fansNum;
+    private Integer fansNum = 0;
 
     @Column(name = "birthday")
     private Date birthday;
@@ -99,6 +99,7 @@ public class User implements Comparable<User>{
     @JsonIgnoreProperties("commentSet")
     @ManyToMany(mappedBy = "usersOfLike",cascade = CascadeType.ALL)
     private Set<Post> postsOfLike;
+
 
 
     public Integer getAttentionNum() {
@@ -226,6 +227,8 @@ public class User implements Comparable<User>{
     public void setPostsOfLike(Set<Post> postsOfLike) {
         this.postsOfLike = postsOfLike;
     }
+
+
 
     @Override
     public int compareTo(User o){

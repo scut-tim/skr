@@ -56,10 +56,10 @@ public class Post {
     }
 
     @Column(name = "likeNum")
-    private Integer likeNum;
+    private Integer likeNum = 0;
 
     @Column(name="clickNum")
-    private Integer clickNum;
+    private Integer clickNum = 0;
 
     @Column(name="date")
     private Date date;

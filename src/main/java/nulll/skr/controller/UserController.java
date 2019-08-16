@@ -146,6 +146,30 @@ public class UserController {
     }
 
 
+    @PutMapping("/user/{id}")
+    public boolean attentionUser(@PathVariable(name="id")int id,boolean attention
+                                ,int userId1){
+
+        User user = userRepository.getOne(id);
+        User user1 = userRepository.getOne(userId1);
+        if(attention == true){
+            user.addFansNum();
+            user1.addAttentionNum();
+        }
+        else {
+            user.subFansNum();
+            user1.subAttentionNum();
+        }
+        userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(user1);
+
+
+        return true;
+    }
+
+
+
+
 //应该是由CommentController负责吧
 
 //    //评论
