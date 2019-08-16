@@ -58,6 +58,9 @@ public class Post {
     @Column(name = "likeNum")
     private Integer likeNum;
 
+    @Column(name="clickNum")
+    private Integer clickNum;
+
     @Column(name="date")
     private Date date;
 
@@ -157,6 +160,13 @@ public class Post {
         this.snack.reduceLikeNum();
     }
 
+    public Integer getClickNum() {
+        return clickNum;
+    }
+
+    public void setClickNum(Integer clickNum) {
+        this.clickNum = clickNum;
+    }
 
     public Set<User> getUsersOfLike() {
         return usersOfLike;

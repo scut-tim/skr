@@ -89,7 +89,9 @@ public class PostController {
 
         Post post = postRepository.getOne(id);
         post.setCommentSet(post.getCommentSet());
-
+        Integer clickNum = post.getClickNum();
+        if(clickNum == null)post.setClickNum(0);
+        else post.setClickNum(clickNum+1);
 
         return post;
 
@@ -112,13 +114,19 @@ public class PostController {
         Integer likeNum = post.getLikeNum();
         if(likeNum == null)post.setLikeNum(0);
 
-        if(like == true)
+        if(like == true){
             post.setLikeNum(post.getLikeNum()+1);
-        else
+            post.getUsersOfLike().add(userRepository.getOne(userId));
+        }
+
+        else{
             post.setLikeNum(post.getLikeNum()-1);
+            post.getUsersOfLike().remove(userRepository.getOne(userId));
+        }
 
 
-        post.getUsersOfLike().add(userRepository.getOne(userId));
+
+
 
 
         postRepository.saveAndFlush(post);
@@ -179,5 +187,12 @@ public class PostController {
 
     }
 
+
+    @GetMapping("/billboardOfClick")
+    public List<Post> getBillboardOfClick(){
+
+        List<Post> list = postRepository.findAll();
+        return list;
+    }
 
 }
