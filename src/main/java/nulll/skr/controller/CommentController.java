@@ -33,7 +33,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     public boolean addComment(String content,String userName,
-                              int postId, String commentDate){
+                              String commentDate,int postId){
 
 
         System.out.println("===================comment================");
@@ -62,8 +62,9 @@ public class CommentController {
     @GetMapping("/comments")
     public List<Comment> listComments(int postId){
 
+        System.out.println("==============getComments================");
         List<Comment> commentList= commentRepository.findAllByPost_Id(postId);
-
+        System.out.println(commentList);
 
         return commentList;
 

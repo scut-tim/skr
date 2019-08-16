@@ -66,7 +66,7 @@ public class Post {
     @JoinColumn(name="post_author",referencedColumnName = "id")
     private User author;
 
-
+    @JsonIgnoreProperties("postsOfLike")
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 
@@ -75,8 +75,11 @@ public class Post {
     private Snack snack;
 
 
-
-    @ManyToMany(mappedBy = "postsOfLike",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"postSet","postsOfLike"})
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name="user_post_like",
+            joinColumns={@JoinColumn(name="post_user",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name="user_post",referencedColumnName = "id")})
     private Set<User> usersOfLike = new HashSet<>();
 
     public Integer getId() {

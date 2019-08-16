@@ -21,15 +21,15 @@ public class AllInterceptor implements HandlerInterceptor {
         System.out.println("getServletPath:" + request.getServletPath());
         System.out.println("getRequestURI:" + request.getRequestURI());
         System.out.println("getRequestURL:" + request.getRequestURL());
-
-        if(request.getSession().getAttribute("LoginUser")==null){
-
-
-            System.out.println("没登陆，就当无事发生");
-            return false;
-        }
-
-        System.out.println("已登录");
+        System.out.println("requestMthod:"+request.getMethod());
+//        if(request.getSession().getAttribute("LoginUser")==null){
+//
+//
+//            System.out.println("没登陆，就当无事发生");
+//            return false;
+//        }
+//
+//        System.out.println("已登录");
 
         return true;
     }

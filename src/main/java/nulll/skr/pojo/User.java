@@ -92,10 +92,12 @@ public class User implements Comparable<User>{
     private Set<Post> postSet;
 
 
-    @ManyToMany(targetEntity = Post.class)
-    @JoinTable(name="user_post_like",
-            joinColumns={@JoinColumn(name="user_post",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name="post_user",referencedColumnName = "id")})
+//    @ManyToMany(targetEntity = Post.class)
+//    @JoinTable(name="user_post_like",
+//            joinColumns={@JoinColumn(name="user_post",referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name="post_user",referencedColumnName = "id")})
+    @JsonIgnoreProperties("commentSet")
+    @ManyToMany(mappedBy = "usersOfLike",cascade = CascadeType.ALL)
     private Set<Post> postsOfLike;
 
 

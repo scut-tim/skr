@@ -48,7 +48,7 @@ public class PostController {
                            String userName, String postDate,
                            HttpServletRequest request) {
 
-        System.out.println("=========/post=====");
+        System.out.println("=========/post=========");
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -101,12 +101,26 @@ public class PostController {
 
     @PutMapping("/post/{id}")
     public boolean updatePost(@PathVariable(name="id")int id,
-                              int userId){
+                              int userId,boolean like){
+
+
+        System.out.println("点赞中");
+
 
         Post post = postRepository.getOne(id);
-        post.setLikeNum(post.getLikeNum()+1);
+
+        Integer likeNum = post.getLikeNum();
+        if(likeNum == null)post.setLikeNum(0);
+
+        if(like == true)
+            post.setLikeNum(post.getLikeNum()+1);
+        else
+            post.setLikeNum(post.getLikeNum()-1);
+
 
         post.getUsersOfLike().add(userRepository.getOne(userId));
+
+
         postRepository.saveAndFlush(post);
         return true;
     }
@@ -155,12 +169,15 @@ public class PostController {
 
 
 
-//    @GetMapping("/billboardOfLike")
-//    public Set<Post> getBillboardOfLike(){
-//
-//
-//
-//    }
+    @GetMapping("/billboardOfLike")
+    public List<Post> getBillboardOfLike(){
+
+
+        List<Post> list = postRepository.findAll();
+
+        return list;
+
+    }
 
 
 }
