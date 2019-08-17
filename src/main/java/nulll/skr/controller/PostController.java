@@ -176,7 +176,7 @@ public class PostController {
 
     }
 
-    
+
     @GetMapping("/postsRecommended")
     public Set<Post> recommendPost(int userId){
 
@@ -196,7 +196,7 @@ public class PostController {
     public List<Post> getBillboardOfLike(){
 
 
-        List<Post> list = postRepository.findAll();
+        List<Post> list = postRepository.findAllByOrderByLikeNumDesc();
 
         return list;
 
@@ -206,7 +206,8 @@ public class PostController {
     @GetMapping("/billboardOfClick")
     public List<Post> getBillboardOfClick(){
 
-        List<Post> list = postRepository.findAll();
+        List<Post> list = postRepository.findAllByOrderByClickNumDesc();
+
         return list;
     }
 
