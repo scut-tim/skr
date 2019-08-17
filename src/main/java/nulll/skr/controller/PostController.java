@@ -6,6 +6,7 @@ import nulll.skr.repository.CommentRepository;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
 import nulll.skr.utils.FileUploadUtils;
+import nulll.skr.utils.RecommendUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,9 @@ public class PostController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RecommendUtils recommendUtils;
 
     @Value("${skr.Post.imagePath}")
     private String postImagePath;
@@ -114,7 +118,7 @@ public class PostController {
         Integer likeNum = post.getLikeNum();
         if(likeNum == null)post.setLikeNum(0);
 
-        if(like == true){
+        if(like){
             post.setLikeNum(post.getLikeNum()+1);
             post.getUsersOfLike().add(userRepository.getOne(userId));
         }
@@ -172,8 +176,19 @@ public class PostController {
 
     }
 
+    
+    @GetMapping("/postsRecommended")
+    public Set<Post> recommendPost(int userId){
 
+        User user = userRepository.getOne(userId);
 
+        List<User> userList = userRepository.findAll();
+
+        Set<Post> postSet = recommendUtils.matchAndRecommend(user, userList);
+
+        return postSet;
+
+    }
 
 
 
@@ -196,3 +211,4 @@ public class PostController {
     }
 
 }
+
