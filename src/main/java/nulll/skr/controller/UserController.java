@@ -1,6 +1,7 @@
 package nulll.skr.controller;
 
 
+import nulll.skr.Interceptor.SessionManagement;
 import nulll.skr.pojo.User;
 import nulll.skr.repository.PostRepository;
 import nulll.skr.repository.UserRepository;
@@ -17,13 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @RestController
 public class UserController {
 
-    @Value("${skr.User.imagePath}")
+    @Value("${skr.imagePath}")
     private String userImagePath;
 
     @Autowired
@@ -32,17 +35,33 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SessionManagement sessionManagement;
+
 
 
 //    @Autowired
 //    private CommentRepository commentRepository;
 
     @PostMapping("/user")
-    public boolean userRegister(User user,HttpServletRequest request){
+    public boolean userRegister(User user,HttpServletRequest request,
+                                HttpServletResponse httpServletResponse){
 
+
+        System.out.println("/user post");
         if(userRepository.findByUserName(user.getUserName())==null){
-            request.getSession().setAttribute("LoginUser",user.getUserName());
+
+            Cookie cookie1 = new Cookie("user",user.getUserName());
+            httpServletResponse.addCookie(cookie1);
+
+
             userRepository.save(user);
+            user = userRepository.findByUserName(user.getUserName());
+            Cookie cookie2 = new Cookie("userId",String.valueOf(user.getId()));
+            httpServletResponse.addCookie(cookie2);
+
+            sessionManagement.setUser(user.getId(),request,httpServletResponse);
+
             return true;
         }
 
@@ -58,7 +77,13 @@ public class UserController {
 
         System.out.println(user);
         User user1 = userRepository.findByUserName(user.getUserName());
-        System.out.println(user1);
+
+        System.out.println("user1: "+user1);
+
+        if(user1 == null)
+            user1 = userRepository.findByEmail(user.getUserName());
+
+        System.out.println("user1: "+user1);
 
         if(user1 != null){
 
@@ -66,9 +91,15 @@ public class UserController {
                 System.out.println(user1.getPassword());
                 Cookie cookie1 = new Cookie("user",user1.getUserName());
                 Cookie cookie2 = new Cookie("userId",String.valueOf(user1.getId()));
-                httpServletRequest.getSession().setAttribute("LoginUser",user.getUserName());
                 httpServletResponse.addCookie(cookie1);
                 httpServletResponse.addCookie(cookie2);
+                if(sessionManagement.getUser(user1.getId(),httpServletRequest)){
+                    System.out.println("重复登录");
+                    return false;
+                }else{
+                    sessionManagement.setUser(user1.getId(),httpServletRequest,httpServletResponse);
+                }
+
                 return true;
 
             }
@@ -107,6 +138,7 @@ public class UserController {
 
             user.setPostSet(user.getPostSet());
             user.setPostsOfLike(user.getPostsOfLike());
+            System.out.println(user);
             return user;
         }
         return null;
@@ -117,30 +149,41 @@ public class UserController {
 
     @PutMapping("/user")
     public boolean updateUser(User user,MultipartFile putHeadPortrait,
-                              String putBirthday){
+                              String putBirthday,HttpServletResponse response){
 
+
+
+
+        User userToSave = userRepository.getOne(user.getId());
 
         System.out.println("putHeadPortrait: "+putHeadPortrait);
         System.out.println("putBirthday: "+putBirthday);
 
+        userToSave.setUserName(user.getUserName());
+        userToSave.setGender(user.getGender());
+        userToSave.setPersonalProfile(user.getPersonalProfile());
 
 
             String headPortrait = fileUploadUtils.uploadFile(putHeadPortrait,userImagePath);
-            user.setHeadPortrait(headPortrait);
+            userToSave.setHeadPortrait(headPortrait);
 
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             try {
-                user.setBirthday(simpleDateFormat.parse(putBirthday));
+                userToSave.setBirthday(simpleDateFormat.parse(putBirthday));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
 
-            System.out.println(user);
+            System.out.println(userToSave);
 
-            userRepository.saveAndFlush(user);
+            userRepository.save(userToSave);
+
+            Cookie cookie = new Cookie("user",userToSave.getUserName());
+            response.addCookie(cookie);
+
             return true;
 
     }
