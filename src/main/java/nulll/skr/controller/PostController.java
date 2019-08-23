@@ -177,14 +177,19 @@ public class PostController {
     }
 
 
-    @GetMapping("/postsRecommended")
-    public Set<Post> recommendPost(int userId){
+    @GetMapping("/postsRecommended/{id}")
+    public Set<Post> recommendPost(@PathVariable(name = "id")int userId){
 
+
+        System.out.println("推荐");
         User user = userRepository.getOne(userId);
 
         List<User> userList = userRepository.findAll();
 
         Set<Post> postSet = recommendUtils.matchAndRecommend(user, userList);
+
+        System.out.println(postSet);
+
 
         return postSet;
 

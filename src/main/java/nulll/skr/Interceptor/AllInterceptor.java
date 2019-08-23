@@ -34,6 +34,11 @@ public class AllInterceptor implements HandlerInterceptor {
 
 
         Cookie[] cookies = request.getCookies();
+        if(cookies == null){
+
+            response.sendError(404);
+            return false;
+        }
         for(Cookie cookie:cookies){
 
             if(cookie.getName().equals("userId")){
