@@ -44,7 +44,7 @@ public class PostController {
     @Autowired
     private RecommendUtils recommendUtils;
 
-    @Value("${skr.Post.imagePath}")
+    @Value("${skr.imagePath}")
     private String postImagePath;
 
     @PostMapping("/post")

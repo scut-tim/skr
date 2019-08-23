@@ -255,6 +255,7 @@ public class User implements Comparable<User>{
                 ", attentionNum=" + attentionNum +
                 ", fansNum=" + fansNum +
                 ", birthday=" + birthday +
+                ", head= "+headPortrait+
                 '}';
     }
 }

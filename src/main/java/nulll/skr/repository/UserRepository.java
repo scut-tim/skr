@@ -13,5 +13,7 @@ public interface UserRepository extends JpaRepository<User,Integer > {
 
     public boolean findByPassword(String password);
 
+    public User findByEmail(String email);
+
 
 }

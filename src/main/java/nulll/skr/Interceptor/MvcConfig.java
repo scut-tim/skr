@@ -14,8 +14,10 @@ import javax.annotation.Resource;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-    @Value("${skr.Post.imagePath}")
+    @Value("${skr.imagePath}")
     private String imagePath;
+
+
 
     @Resource
     private AllInterceptor allInterceptor;
