@@ -57,7 +57,7 @@ public class AllInterceptor implements HandlerInterceptor {
             }
 
         }
-        System.out.println("没登陆!");
+
         return false;
 
     }

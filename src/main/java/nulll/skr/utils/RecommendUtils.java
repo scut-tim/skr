@@ -33,6 +33,9 @@ public class RecommendUtils {
                 similarityLimit = similarity;
             }
         }
+
+        if(user1 != null)
         return user1.getPostsOfLike();
+        else return null;
     }
 }
